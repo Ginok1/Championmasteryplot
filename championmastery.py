@@ -22,7 +22,7 @@ def scrape_data(summoner_name, region="EUW"):
     return df[:-1]
 
 
-def plot_mastery_distribution(summoners):
+def plot_mastery_rank_distribution(summoners):
     """ Plots the Mastery rank distribution of given summoners in comparison
 
     Parameters
@@ -41,6 +41,23 @@ def plot_mastery_distribution(summoners):
     plt.show()
 
 
+def plot_mastery_points_distribution(summoners):
+    for summoner_name in summoners:
+        df = scrape_data(summoner_name)
+        y = list(df['Points'])
+
+        x = np.linspace(0, 1, len(y))
+        plt.plot(x, y[::-1], "o-", label=summoner_name )
+    plt.legend()
+    plt.grid()
+    plt.yscale('log')
+    plt.ylabel("Mastery Points")
+    plt.xlabel("Champions ordered by Mastery Points")
+    plt.xticks([])
+    plt.show()
+
+
 if __name__ == "__main__":
     summoners = ["Rivers Pride", "Psiteryder", "TeilschenFürUmme", "dieser Helge", "KIT MiLe", "Verynxia", "Chef Ainsley"]
-    plot_mastery_distribution(summoners)
+    #plot_mastery_rank_distribution(summoners)
+    plot_mastery_points_distribution(summoners)
